@@ -1,0 +1,88 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+</head>
+
+<!-- Insert CSS here -->
+
+<style type="text/css">
+
+   #mynetwork {
+       width: 100%;
+       height: 800px;
+       background-color: #ffffff;
+       border: 1px solid lightgray;
+       position: relative;
+       float: left;
+   }
+
+</style>
+
+
+<body>
+
+     <!-- Insert html code here -->
+
+     <div class="container">
+	 <div class="jumbotron text-center">
+         <h1>Class Relationship Survey for Y6 - Term 1 </h1>
+         <p>1. The graphs are dynamic! You can zoom in and zoom out, and pull apart the nodes using your mouse. <br>
+2. An arrow pointing from Student A to Student B means that Student A has identified Student B as a friend. <br>
+3. Bidirectional arrows means that they have chosen each other as friends. <br>
+4. Number in brackets next to each student's name and size of node indicate the number of classmates who have chosen this student as a friend (the higher the number, the higher his/her popularity). You may want to take note of loners too (those who have all arrows pointing out and no arrows pointing in, or they have not identified any friends, or chose not to do the survey). <br>
+5. Students who did not take the survey and those who did not indicate any friends in the class are also included. <br>
+</p>
+	    <p>Select the graph you would like to see from the dropdown list: 
+     <select name="clusterData" id="clusterData" onchange="loadIFrame()">
+       <option value="CRS">CRS</option>
+       <option value="CRS and UAS">CRS and UAS</option>
+       <option value="CRS and CCA">CRS and CCA</option>
+     </select>
+         </p>
+     </div>
+</div>
+     <!-- <button onclick="loadIFrame()">Refresh</button> -->
+
+     <div id ="placeholder"></div>
+
+     <!-- This is the container where the data is displayed -->
+     <div id = "mynetwork"></div>
+
+
+     <!-- Insert Javascript here -->
+
+     <script type="text/javascript">
+
+          function getOption() {
+             var selectElement = document.getElementById("clusterData");
+             var choice = selectElement.value;
+             // document.getElementById("placeholder").innerText = choice
+             return choice
+          }
+
+          function loadIFrame(){
+
+               var fileName = getOption()
+
+               var networkContainer = document.getElementById("mynetwork")
+
+               var className = "23G01Z"
+
+               networkContainer.innerHTML = `<iframe src="${className} ${fileName}.html" title="${fileName}" width="100%" height="1200px"></iframe>`
+
+          }
+
+
+          // Loads Cluster CRS as default
+          loadIFrame()
+
+     </script> 
+
+</body>
+
+</html>

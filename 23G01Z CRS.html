@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1><p style="color:black;font-size:14px;"><p style=text-align:left;><font size = 3>23G01Z CRS<br>This graph shows the class relationship among students. Note that:<br>A. Nodes are coloured by Louvain method for community detection, an optimization method to extract communities. <br>Nodes coloured similarly will mean that the students are likely to belong to the same clique.<br>B. On mouseover, you can see their Intake (RP or JAE), whether they are on Financial Assistance Scheme,                 reason for not stating any friends, and feedback for CTs (if any).</font></p></p></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "#ff50c9", "id": "Stdt_1", "label": "Stdt_1 (3)", "shape": "dot", "size": 22, "title": "Intake: RP, Feedback for CT(s): Putting Nikhil in 1A was not a good idea"}, {"color": "#ff50c9", "id": "Stdt_4", "label": "Stdt_4 (6)", "shape": "dot", "size": 34, "title": "Intake: RP"}, {"color": "#ff50c9", "id": "Stdt_16", "label": "Stdt_16 (1)", "shape": "dot", "size": 14, "title": "Intake: JAE - Arts, Feedback for CT(s): What is this survey"}, {"color": "#ff50c9", "id": "Stdt_17", "label": "Stdt_17 (8)", "shape": "dot", "size": 42, "title": "Intake: RP"}, {"color": "#ff50c9", "id": "Stdt_3", "label": "Stdt_3 (5)", "shape": "dot", "size": 30, "title": "Intake: RP"}, {"color": "#ff50c9", "id": "Stdt_8", "label": "Stdt_8 (4)", "shape": "dot", "size": 26, "title": "Intake: JAE - Arts, Feedback for CT(s): I have lots of friends \u003e:("}, {"color": "#01119c", "id": "Stdt_2", "label": "Stdt_2 (0)", "shape": "dot", "size": 10, "title": "Intake: RP"}, {"color": "#01119c", "id": "Stdt_14", "label": "Stdt_14 (4)", "shape": "dot", "size": 26, "title": "Intake: JAE - Arts"}, {"color": "#01119c", "id": "Stdt_18", "label": "Stdt_18 (3)", "shape": "dot", "size": 22, "title": "Intake: RP"}, {"color": "#ffa93f", "id": "Stdt_5", "label": "Stdt_5 (2)", "shape": "dot", "size": 18, "title": "Intake: RP"}, {"color": "#ffa93f", "id": "Stdt_10", "label": "Stdt_10 (3)", "shape": "dot", "size": 22, "title": "Intake: RP"}, {"color": "#ffa93f", "id": "Stdt_12", "label": "Stdt_12 (3)", "shape": "dot", "size": 22, "title": "Intake: RP"}, {"color": "#ff50c9", "id": "Stdt_6", "label": "Stdt_6 (1)", "shape": "dot", "size": 14, "title": "Intake: RP"}, {"color": "#ff50c9", "id": "Stdt_9", "label": "Stdt_9 (0)", "shape": "dot", "size": 10, "title": "Intake: RP"}, {"color": "#01119c", "id": "Stdt_11", "label": "Stdt_11 (2)", "shape": "dot", "size": 18, "title": "Intake: RP, ISB: Yes, 70%, Raffles Scholarship, Feedback for CT(s): No"}, {"color": "#01119c", "id": "Stdt_19", "label": "Stdt_19 (3)", "shape": "dot", "size": 22, "title": "Intake: RP"}, {"color": "#01119c", "id": "Stdt_13", "label": "Stdt_13 (2)", "shape": "dot", "size": 18, "title": "Intake: RP"}, {"color": "#01119c", "id": "Stdt_15", "label": "Stdt_15 (2)", "shape": "dot", "size": 18, "title": "Intake: RP"}, {"color": "#77f431", "id": "Stdt_7", "label": "Stdt_7 (0)", "shape": "dot", "size": 10, "title": "Intake: RP, Reason for not stating any friends: i just joined"}]);
+        edges = new vis.DataSet([{"arrows": "to,from", "from": "Stdt_1", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_1", "to": "Stdt_16", "weight": 1}, {"arrows": "to", "from": "Stdt_1", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_4", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_4", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_18", "weight": 1}, {"arrows": "to", "from": "Stdt_8", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_8", "to": "Stdt_3", "weight": 1}, {"arrows": "to", "from": "Stdt_3", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_5", "to": "Stdt_10", "weight": 1}, {"arrows": "to,from", "from": "Stdt_5", "to": "Stdt_12", "weight": 1}, {"arrows": "to", "from": "Stdt_5", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_10", "to": "Stdt_12", "weight": 1}, {"arrows": "to,from", "from": "Stdt_10", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_6", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_6", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_6", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_17", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_1", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_3", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_11", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_14", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_12", "to": "Stdt_19", "weight": 1}, {"arrows": "to", "from": "Stdt_13", "to": "Stdt_15", "weight": 1}, {"arrows": "to,from", "from": "Stdt_13", "to": "Stdt_19", "weight": 1}, {"arrows": "to,from", "from": "Stdt_13", "to": "Stdt_18", "weight": 1}, {"arrows": "to,from", "from": "Stdt_15", "to": "Stdt_18", "weight": 1}, {"arrows": "to", "from": "Stdt_15", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_15", "to": "Stdt_19", "weight": 1}, {"arrows": "to", "from": "Stdt_18", "to": "Stdt_11", "weight": 1}, {"arrows": "to", "from": "Stdt_16", "to": "Stdt_4", "weight": 1}, {"arrows": "to", "from": "Stdt_16", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_19", "to": "Stdt_14", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"shadow": {"enabled": false}, "size": 10}, "physics": {"barnesHut": {"springLength": 300, "gravity": -80000, "avoidOverlay": 0.6}, "minVelocity": 0.2}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

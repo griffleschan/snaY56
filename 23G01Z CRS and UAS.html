@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1><p style="color:black;font-size:14px;"><p style=text-align:left;><font size = 3>23G01Z CRS + Results<br>This graph shows the class relationship among students with their Promo Overall results. Note that:<br>A. Nodes are coloured by UAS (red < 50, 50 <= orange < 60, 60 <= blue < 70, green >= 70 )<br>B. On mouseover, the Promo overall results and UAS will be shown.</font></p></p></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 800px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"color": "blue", "id": "Stdt_1", "label": "Stdt_1 (3)", "shape": "dot", "size": 22, "title": "H1GP_A 70.00, H1MATH_A 90.00, H2ELIT_C 58.00, H2ELL_B 60.00, H2HIST_C 59.00\u003cbr\u003eUAS: 67.5"}, {"color": "blue", "id": "Stdt_4", "label": "Stdt_4 (6)", "shape": "dot", "size": 34, "title": "H1MATH_A 84.00, H2ECONS_D 54.00, H2ELIT_C 56.00, H2HIST_B 63.00, H2KI_B 64.00\u003cbr\u003eUAS: 66.25"}, {"color": "green", "id": "Stdt_16", "label": "Stdt_16 (1)", "shape": "dot", "size": 14, "title": "H1MATH_A 70.00, H2ECONS_B 68.00, H2ELIT_B 62.00, H2HIST_B 63.00, H2KI_B 67.00\u003cbr\u003eUAS: 71.25"}, {"color": "blue", "id": "Stdt_17", "label": "Stdt_17 (8)", "shape": "dot", "size": 42, "title": "H1GP_A 77.00, H2ECONS_B 69.00, H2ELIT_B 65.00, H2HIST_B 60.00, H2MATH_EVR\u003cbr\u003eUAS: 62.5"}, {"color": "blue", "id": "Stdt_3", "label": "Stdt_3 (5)", "shape": "dot", "size": 30, "title": "H2ECONS_B 64.00, H2ELIT_B 66.00, H2KI_C 55.00, H2MATH_B 66.00\u003cbr\u003eUAS: 67.5"}, {"color": "green", "id": "Stdt_8", "label": "Stdt_8 (4)", "shape": "dot", "size": 26, "title": "H1GP_B 68.00, H2ECONS_A 71.00, H2ELIT_B 61.00, H2HIST_B 65.00, H2MATH_B 61.00\u003cbr\u003eUAS: 72.5"}, {"color": "blue", "id": "Stdt_2", "label": "Stdt_2 (0)", "shape": "dot", "size": 10, "title": "H2ECONS_B 64.00, H2ELIT_B 66.00, H2KI_C 56.00, H2MATH_D 52.00\u003cbr\u003eUAS: 62.5"}, {"color": "blue", "id": "Stdt_14", "label": "Stdt_14 (4)", "shape": "dot", "size": 26, "title": "H1MATH_A 93.00, H2ECONS_A 78.00, H2ELIT_C 58.00, H2HIST_B 66.00, H2KI_D 52.00\u003cbr\u003eUAS: 68.75"}, {"color": "green", "id": "Stdt_18", "label": "Stdt_18 (3)", "shape": "dot", "size": 22, "title": "H2ECONS_A 70.00, H2ELIT_A 75.00, H2KI_B 60.00, H2MATH_B 65.00\u003cbr\u003eUAS: 75.0"}, {"color": "blue", "id": "Stdt_5", "label": "Stdt_5 (2)", "shape": "dot", "size": 18, "title": "H1GP_B 67.00, H2ECONS_C 58.00, H2ELIT_B 64.00, H2HIST_B 64.00, H2MATH_D 54.00\u003cbr\u003eUAS: 65.0"}, {"color": "green", "id": "Stdt_10", "label": "Stdt_10 (3)", "shape": "dot", "size": 22, "title": "H1GP_A 70.00, H2ECONS_B 67.00, H2ELIT_B 68.00, H2HIST_B 66.00, H2MATH_B 60.00\u003cbr\u003eUAS: 71.25"}, {"color": "blue", "id": "Stdt_12", "label": "Stdt_12 (3)", "shape": "dot", "size": 22, "title": "H1GP_A 75.00, H2ECONS_B 69.00, H2ELIT_B 66.00, H2HIST_B 61.00, H2MATH_E 45.00\u003cbr\u003eUAS: 67.5"}, {"color": "orange", "id": "Stdt_6", "label": "Stdt_6 (1)", "shape": "dot", "size": 14, "title": "H2ECONS_D 51.00, H2ELIT_A 72.00, H2KI_E 45.00, H2MATH_D 53.00\u003cbr\u003eUAS: 55.0"}, {"color": "blue", "id": "Stdt_9", "label": "Stdt_9 (0)", "shape": "dot", "size": 10, "title": "H2ECONS_B 64.00, H2ELIT_B 63.00, H2HIST_B 61.00, H2KI_C 59.00, H2MATH_E 46.00\u003cbr\u003eUAS: 67.5"}, {"color": "green", "id": "Stdt_11", "label": "Stdt_11 (2)", "shape": "dot", "size": 18, "title": "H2ECONS_B 69.00, H2ELIT_A 74.00, H2KI_B 66.00, H2MATH_A 74.00\u003cbr\u003eUAS: 75.0"}, {"color": "green", "id": "Stdt_19", "label": "Stdt_19 (3)", "shape": "dot", "size": 22, "title": "H1GP_A 79.00, H2ECONS_A 71.00, H2ELIT_A 74.00, H2HIST_B 64.00, H2MATH_A 71.00\u003cbr\u003eUAS: 78.75"}, {"color": "green", "id": "Stdt_13", "label": "Stdt_13 (2)", "shape": "dot", "size": 18, "title": "H2ECONS_A 75.00, H2ELIT_A 71.00, H2KI_A 78.00, H2MATH_A 90.00\u003cbr\u003eUAS: 80.0"}, {"color": "green", "id": "Stdt_15", "label": "Stdt_15 (2)", "shape": "dot", "size": 18, "title": "H2ELIT_A 87.00, H2HIST_A 81.00, H2KI_A 89.00, H2MATH_A 93.00\u003cbr\u003eUAS: 80.0"}, {"color": "orange", "id": "Stdt_7", "label": "Stdt_7 (0)", "shape": "dot", "size": 10, "title": "H1GP_B 65.00, H2ECONS_D 51.00, H2ELIT_C 59.00, H2HIST_B 63.00, H2MATH_S 42.00\u003cbr\u003eUAS: 56.25"}]);
+        edges = new vis.DataSet([{"arrows": "to,from", "from": "Stdt_1", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_1", "to": "Stdt_16", "weight": 1}, {"arrows": "to", "from": "Stdt_1", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_4", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_4", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_2", "to": "Stdt_18", "weight": 1}, {"arrows": "to", "from": "Stdt_8", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_8", "to": "Stdt_3", "weight": 1}, {"arrows": "to", "from": "Stdt_3", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_5", "to": "Stdt_10", "weight": 1}, {"arrows": "to,from", "from": "Stdt_5", "to": "Stdt_12", "weight": 1}, {"arrows": "to", "from": "Stdt_5", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_10", "to": "Stdt_12", "weight": 1}, {"arrows": "to,from", "from": "Stdt_10", "to": "Stdt_17", "weight": 1}, {"arrows": "to,from", "from": "Stdt_6", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_6", "to": "Stdt_8", "weight": 1}, {"arrows": "to", "from": "Stdt_6", "to": "Stdt_3", "weight": 1}, {"arrows": "to,from", "from": "Stdt_17", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_1", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_3", "weight": 1}, {"arrows": "to", "from": "Stdt_9", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_11", "to": "Stdt_14", "weight": 1}, {"arrows": "to", "from": "Stdt_14", "to": "Stdt_4", "weight": 1}, {"arrows": "to,from", "from": "Stdt_12", "to": "Stdt_19", "weight": 1}, {"arrows": "to", "from": "Stdt_13", "to": "Stdt_15", "weight": 1}, {"arrows": "to,from", "from": "Stdt_13", "to": "Stdt_19", "weight": 1}, {"arrows": "to,from", "from": "Stdt_13", "to": "Stdt_18", "weight": 1}, {"arrows": "to,from", "from": "Stdt_15", "to": "Stdt_18", "weight": 1}, {"arrows": "to", "from": "Stdt_15", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_15", "to": "Stdt_19", "weight": 1}, {"arrows": "to", "from": "Stdt_18", "to": "Stdt_11", "weight": 1}, {"arrows": "to", "from": "Stdt_16", "to": "Stdt_4", "weight": 1}, {"arrows": "to", "from": "Stdt_16", "to": "Stdt_17", "weight": 1}, {"arrows": "to", "from": "Stdt_19", "to": "Stdt_14", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"shadow": {"enabled": false}, "size": 10}, "physics": {"barnesHut": {"springLength": 300, "gravity": -80000, "avoidOverlay": 0.6}, "minVelocity": 0.2}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
